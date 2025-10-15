@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Alerts</h1>
+    <%= link_to "New Alert", new_alert_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if notice %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Threshold</th>
+        <th>Direction</th>
+        <th>Active</th>
+        <th>Channels</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @alerts.each do |alert| %>
+        <tr>
+          <td><%= alert.symbol %></td>
+          <td><%= alert.threshold %></td>
+          <td><%= alert.direction %></td>
+          <td>
+            <span class="badge <%= alert.active ? 'bg-success' : 'bg-secondary' %>"><%= alert.active ? 'Active' : 'Paused' %></span>
+          </td>
+          <td><%= alert.notification_channels.map(&:name).join(', ') %></td>
+          <td class="text-end">
+            <%= link_to 'Edit', edit_alert_path(alert), class: 'btn btn-sm btn-outline-primary' %>
+            <%= button_to 'Delete', alert_path(alert), method: :delete, class: 'btn btn-sm btn-outline-danger', data: { turbo_confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

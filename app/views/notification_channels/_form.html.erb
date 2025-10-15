@@ -1,0 +1,19 @@
+<%= form_with(model: notification_channel) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :kind, class: "form-label" %>
+    <%= f.select :kind, NotificationChannel.kinds.keys.map { |k| [k.titleize, k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :settings, "Settings (JSON)", class: "form-label" %>
+    <%= f.text_area :settings, value: notification_channel.settings.to_json, class: "form-control", rows: 4 %>
+    <div class="form-text">For email, provide {"email": "you@example.com"}</div>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

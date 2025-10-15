@@ -1,0 +1,34 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Notification Channels</h1>
+    <%= link_to "New Channel", new_notification_channel_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if notice %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Kind</th>
+        <th>Settings</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @notification_channels.each do |ch| %>
+        <tr>
+          <td><%= ch.name %></td>
+          <td><%= ch.kind %></td>
+          <td><code><%= ch.settings.to_json %></code></td>
+          <td class="text-end">
+            <%= link_to 'Edit', edit_notification_channel_path(ch), class: 'btn btn-sm btn-outline-primary' %>
+            <%= button_to 'Delete', notification_channel_path(ch), method: :delete, class: 'btn btn-sm btn-outline-danger', data: { turbo_confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
